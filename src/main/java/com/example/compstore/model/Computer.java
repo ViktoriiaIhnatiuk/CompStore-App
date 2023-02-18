@@ -152,7 +152,7 @@ public abstract class Computer {
                 + "hardDriveSize=" + hardDriveSize + '\n'
                 + "operatingSystem='" + operatingSystem + '\'' + '\n'
                 + "description='" + description + '\'' + '\n'
-                + "price=" + price;
+                + "price=" + price + " $";
     }
 }
 
