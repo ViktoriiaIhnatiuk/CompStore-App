@@ -1,21 +1,11 @@
-package com.example.compstore.model;
+package com.example.compstore.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import org.hibernate.annotations.DynamicUpdate;
+import com.example.compstore.model.ComputerType;
+import com.example.compstore.model.HardDriveType;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
 import java.math.BigDecimal;
 
-@MappedSuperclass
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@DynamicUpdate
-public abstract class Computer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class LaptopResponseDto {
     private ComputerType computerType;
     private String brandName;
     private String model;
@@ -30,14 +20,14 @@ public abstract class Computer {
     private String operatingSystem;
     private String description;
     private BigDecimal price;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private int displayDiagonalSize;
+    private String displayResolution;
+    private int refreshRate;
+    private boolean touchScreenSupported;
+    private boolean hasWebCam;
+    private String webCamResolution;
+    private Long id;
+    private int batteryLifeTimeInHours;
 
     public ComputerType getComputerType() {
         return computerType;
@@ -151,24 +141,67 @@ public abstract class Computer {
         this.price = price;
     }
 
-    @Override
-    public String toString() {
-        return  "id=" + id + '\n'
-                + "computerType=" + computerType + '\n'
-                + "brandName='" + brandName + '\'' + '\n'
-                + "model='" + model + '\'' + '\n'
-                + "cpuManufacturer='" + cpuManufacturer + '\'' + '\n'
-                + "processor='" + processor + '\'' + '\n'
-                + "processorCount=" + processorCount + '\n'
-                + "graphicsProcessor='" + graphicsProcessor + '\'' + '\n'
-                + "graphicsProcessorMemory=" + graphicsProcessorMemory + '\n'
-                + "ramSize=" + ramSize + '\n'
-                + "hardDriveType=" + hardDriveType + '\n'
-                + "hardDriveSize=" + hardDriveSize + '\n'
-                + "operatingSystem='" + operatingSystem + '\'' + '\n'
-                + "description='" + description + '\'' + '\n'
-                + "price=" + price + " $";
+    public int getDisplayDiagonalSize() {
+        return displayDiagonalSize;
+    }
+
+    public void setDisplayDiagonalSize(int displayDiagonalSize) {
+        this.displayDiagonalSize = displayDiagonalSize;
+    }
+
+    public String getDisplayResolution() {
+        return displayResolution;
+    }
+
+    public void setDisplayResolution(String displayResolution) {
+        this.displayResolution = displayResolution;
+    }
+
+    public int getRefreshRate() {
+        return refreshRate;
+    }
+
+    public void setRefreshRate(int refreshRate) {
+        this.refreshRate = refreshRate;
+    }
+
+    public boolean isTouchScreenSupported() {
+        return touchScreenSupported;
+    }
+
+    public void setTouchScreenSupported(boolean touchScreenSupported) {
+        this.touchScreenSupported = touchScreenSupported;
+    }
+
+    public boolean isHasWebCam() {
+        return hasWebCam;
+    }
+
+    public void setHasWebCam(boolean hasWebCam) {
+        this.hasWebCam = hasWebCam;
+    }
+
+    public String getWebCamResolution() {
+        return webCamResolution;
+    }
+
+    public void setWebCamResolution(String webCamResolution) {
+        this.webCamResolution = webCamResolution;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public int getBatteryLifeTimeInHours() {
+        return batteryLifeTimeInHours;
+    }
+
+    public void setBatteryLifeTimeInHours(int batteryLifeTimeInHours) {
+        this.batteryLifeTimeInHours = batteryLifeTimeInHours;
     }
 }
-
-
