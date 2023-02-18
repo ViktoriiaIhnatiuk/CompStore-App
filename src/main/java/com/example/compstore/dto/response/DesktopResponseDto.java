@@ -1,21 +1,12 @@
-package com.example.compstore.model;
+package com.example.compstore.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import org.hibernate.annotations.DynamicUpdate;
+import com.example.compstore.model.CaseLightingColor;
+import com.example.compstore.model.ComputerType;
+import com.example.compstore.model.HardDriveType;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
 import java.math.BigDecimal;
 
-@MappedSuperclass
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@DynamicUpdate
-public abstract class Computer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class DesktopResponseDto {
     private ComputerType computerType;
     private String brandName;
     private String model;
@@ -30,14 +21,8 @@ public abstract class Computer {
     private String operatingSystem;
     private String description;
     private BigDecimal price;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private Long id;
+    private CaseLightingColor caseLightingColor;
 
     public ComputerType getComputerType() {
         return computerType;
@@ -151,24 +136,19 @@ public abstract class Computer {
         this.price = price;
     }
 
-    @Override
-    public String toString() {
-        return  "id=" + id + '\n'
-                + "computerType=" + computerType + '\n'
-                + "brandName='" + brandName + '\'' + '\n'
-                + "model='" + model + '\'' + '\n'
-                + "cpuManufacturer='" + cpuManufacturer + '\'' + '\n'
-                + "processor='" + processor + '\'' + '\n'
-                + "processorCount=" + processorCount + '\n'
-                + "graphicsProcessor='" + graphicsProcessor + '\'' + '\n'
-                + "graphicsProcessorMemory=" + graphicsProcessorMemory + '\n'
-                + "ramSize=" + ramSize + '\n'
-                + "hardDriveType=" + hardDriveType + '\n'
-                + "hardDriveSize=" + hardDriveSize + '\n'
-                + "operatingSystem='" + operatingSystem + '\'' + '\n'
-                + "description='" + description + '\'' + '\n'
-                + "price=" + price + " $";
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public CaseLightingColor getCaseLightingColor() {
+        return caseLightingColor;
+    }
+
+    public void setCaseLightingColor(CaseLightingColor caseLightingColor) {
+        this.caseLightingColor = caseLightingColor;
     }
 }
-
-

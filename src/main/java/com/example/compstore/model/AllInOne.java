@@ -10,21 +10,8 @@ import javax.persistence.*;
 @DynamicInsert
 @DynamicUpdate
 public class AllInOne extends DisplayIncludedComputer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     @Override
     public String toString() {
-        return super.toString() + '\n'
-                + "id=" + id;
+        return super.toString();
     }
 }

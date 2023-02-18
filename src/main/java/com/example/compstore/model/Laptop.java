@@ -14,18 +14,7 @@ import javax.persistence.Table;
 @DynamicInsert
 @DynamicUpdate
 public class Laptop extends DisplayIncludedComputer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private int batteryLifeTimeInHours;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public int getBatteryLifeTimeInHours() {
         return batteryLifeTimeInHours;
@@ -38,7 +27,6 @@ public class Laptop extends DisplayIncludedComputer {
     @Override
     public String toString() {
         return  super.toString() + '\n' +
-                "batteryLifeTimeInHours=" + batteryLifeTimeInHours  + '\n' +
-                "id=" + id;
+                "batteryLifeTimeInHours=" + batteryLifeTimeInHours;
     }
 }
