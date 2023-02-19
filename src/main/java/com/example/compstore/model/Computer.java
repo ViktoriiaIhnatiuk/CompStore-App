@@ -2,42 +2,35 @@ package com.example.compstore.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.annotations.DynamicUpdate;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import java.math.BigDecimal;
 
-@MappedSuperclass
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @DynamicUpdate
-public abstract class Computer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public abstract class Computer extends Item {
+    @NotNull
+    @Enumerated(EnumType.STRING)
     private ComputerType computerType;
     private String brandName;
     private String model;
     private String cpuManufacturer;
     private String processor;
+    @PositiveOrZero
     private int processorCount;
     private String graphicsProcessor;
+    @PositiveOrZero
     private int graphicsProcessorMemory;
+    @PositiveOrZero
     private int ramSize;
     private HardDriveType hardDriveType;
+    @PositiveOrZero
     private int hardDriveSize;
     private String operatingSystem;
-    private String description;
-    private BigDecimal price;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public ComputerType getComputerType() {
         return computerType;
@@ -135,25 +128,9 @@ public abstract class Computer {
         this.operatingSystem = operatingSystem;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
     @Override
     public String toString() {
-        return  "id=" + id + '\n'
+        return  super.toString() + '\n'
                 + "computerType=" + computerType + '\n'
                 + "brandName='" + brandName + '\'' + '\n'
                 + "model='" + model + '\'' + '\n'
@@ -165,9 +142,7 @@ public abstract class Computer {
                 + "ramSize=" + ramSize + '\n'
                 + "hardDriveType=" + hardDriveType + '\n'
                 + "hardDriveSize=" + hardDriveSize + '\n'
-                + "operatingSystem='" + operatingSystem + '\'' + '\n'
-                + "description='" + description + '\'' + '\n'
-                + "price=" + price + " $";
+                + "operatingSystem='" + operatingSystem + '\'';
     }
 }
 
