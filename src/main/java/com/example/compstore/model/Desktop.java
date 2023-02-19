@@ -1,5 +1,6 @@
 package com.example.compstore.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -9,7 +10,10 @@ import javax.persistence.*;
 @Table(name = "desktop")
 @DynamicInsert
 @DynamicUpdate
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@DiscriminatorColumn(name = "DESKTOP")
 public class Desktop extends Computer {
+    @Enumerated(EnumType.STRING)
     private CaseLightingColor caseLightingColor;
 
     public CaseLightingColor getCaseLightingColor() {

@@ -2,13 +2,18 @@ package com.example.compstore.model;
 
 import org.hibernate.annotations.DynamicUpdate;
 
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.PositiveOrZero;
 
 @MappedSuperclass
 @DynamicUpdate
 public abstract class DisplayIncludedComputer extends Computer {
+    @PositiveOrZero
     private int displayDiagonalSize;
     private String displayResolution;
+    @PositiveOrZero
     private int refreshRate;
     private boolean touchScreenSupported;
     private boolean hasWebCam;

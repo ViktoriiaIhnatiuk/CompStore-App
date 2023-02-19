@@ -6,6 +6,8 @@ import com.example.compstore.mapper.DesktopMapper;
 import com.example.compstore.service.DesktopService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +26,7 @@ public class DesktopController {
 
     @PostMapping
     @ApiOperation("inserts a new desktop into DB")
-    public DesktopResponseDto createDesktop(@RequestBody DesktopRequestDto desktopRequestDto) {
+    public DesktopResponseDto createDesktop(@Valid @RequestBody DesktopRequestDto desktopRequestDto) {
         return desktopMapper.mapToDto(desktopService.create(desktopMapper.mapToModel(desktopRequestDto)));
     }
 
@@ -45,7 +47,7 @@ public class DesktopController {
     @PatchMapping("/{id}")
     @ApiOperation("updates the desktop with the concrete id")
     public DesktopResponseDto updateDesktopById(@PathVariable Long id,
-                                   @RequestBody DesktopRequestDto desktopRequestDto) {
+                                   @Valid @RequestBody DesktopRequestDto desktopRequestDto) {
         return desktopMapper.mapToDto(desktopService.update(id,
                 desktopMapper.mapToModel(desktopRequestDto)));
     }

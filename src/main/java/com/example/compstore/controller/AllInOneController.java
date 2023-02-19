@@ -6,7 +6,7 @@ import com.example.compstore.mapper.AllInOneMapper;
 import com.example.compstore.service.AllInOneService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
-
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +24,7 @@ public class AllInOneController {
 
     @PostMapping
     @ApiOperation("inserts a new all-in-one into DB")
-    public AllInOneResponseDto createAllInOne(@RequestBody AllInOneRequestDto allInOneRequestDto) {
+    public AllInOneResponseDto createAllInOne(@Valid @RequestBody AllInOneRequestDto allInOneRequestDto) {
         return allInOneMapper.mapToDto(allInOneService.create(allInOneMapper.mapToModel(allInOneRequestDto)));
     }
 
@@ -45,7 +45,7 @@ public class AllInOneController {
     @PatchMapping("/{id}")
     @ApiOperation("updates the all-in-one with the concrete id")
     public AllInOneResponseDto updateLaptopById(@PathVariable Long id,
-                                   @RequestBody AllInOneRequestDto allInOneRequestDto) {
+                                   @Valid @RequestBody AllInOneRequestDto allInOneRequestDto) {
         return allInOneMapper.mapToDto(allInOneService.update(id,
                 allInOneMapper.mapToModel(allInOneRequestDto)));
     }

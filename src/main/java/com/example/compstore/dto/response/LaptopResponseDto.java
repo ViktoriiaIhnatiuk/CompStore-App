@@ -2,9 +2,11 @@ package com.example.compstore.dto.response;
 
 import com.example.compstore.model.ComputerType;
 import com.example.compstore.model.HardDriveType;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.math.BigDecimal;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class LaptopResponseDto {
     private ComputerType computerType;
     private String brandName;

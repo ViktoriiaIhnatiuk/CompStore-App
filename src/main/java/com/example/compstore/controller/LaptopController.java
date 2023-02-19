@@ -6,6 +6,7 @@ import com.example.compstore.mapper.LaptopMapper;
 import com.example.compstore.service.LaptopService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,7 +24,7 @@ public class LaptopController {
 
     @PostMapping
     @ApiOperation("inserts a new laptop into DB")
-    public LaptopResponseDto createLaptop(@RequestBody LaptopRequestDto laptopRequestDto) {
+    public LaptopResponseDto createLaptop(@Valid @RequestBody LaptopRequestDto laptopRequestDto) {
         return laptopMapper.mapToDto(laptopService.create(laptopMapper.mapToModel(laptopRequestDto)));
     }
 
@@ -44,7 +45,7 @@ public class LaptopController {
     @PatchMapping("/{id}")
     @ApiOperation("updates the laptop with the concrete id")
     public LaptopResponseDto updateLaptopById(@PathVariable Long id,
-                                   @RequestBody LaptopRequestDto laptopRequestDto) {
+                                  @Valid @RequestBody LaptopRequestDto laptopRequestDto) {
         return laptopMapper.mapToDto(laptopService.update(id,
                 laptopMapper.mapToModel(laptopRequestDto)));
     }
