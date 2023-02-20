@@ -1,30 +1,38 @@
 package com.example.compstore.config;
 
 import com.example.compstore.model.*;
-import com.example.compstore.service.AllInOneService;
-import com.example.compstore.service.DesktopService;
-import com.example.compstore.service.LaptopService;
+import com.example.compstore.service.*;
 import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
+import java.util.Set;
 
 @Component
 public class DataInitializer {
+    private static final Role USER_ROLE = Role.USER;
+    private static final Role ADMIN_ROLE = Role.ADMIN;
     private final LaptopService laptopService;
     private final AllInOneService allInOneService;
     private final DesktopService desktopService;
+    private final UserService userService;
+    private final ShoppingCartService shoppingCartService;
 
     public DataInitializer(LaptopService laptopService,
                            AllInOneService allInOneService,
-                           DesktopService desktopService) {
+                           DesktopService desktopService,
+                           UserService userService,
+                           ShoppingCartService shoppingCartService) {
         this.laptopService = laptopService;
         this.allInOneService = allInOneService;
         this.desktopService = desktopService;
+        this.userService = userService;
+        this.shoppingCartService = shoppingCartService;
     }
 
     @PostConstruct
     public void inject() {
         Laptop lenovoThinkPad = new Laptop();
+        lenovoThinkPad.setName("Lenovo ThinkPad P15");
         lenovoThinkPad.setComputerType(ComputerType.LAPTOP);
         lenovoThinkPad.setBrandName("Lenovo");
         lenovoThinkPad.setModel("ThinkPad P15 Gen 1");
@@ -47,6 +55,7 @@ public class DataInitializer {
         laptopService.create(lenovoThinkPad);
 
         AllInOne hpPavilion32 = new AllInOne();
+        hpPavilion32.setName("HP Pavilion 32");
         hpPavilion32.setComputerType(ComputerType.ALL_IN_ONE);
         hpPavilion32.setBrandName("Hewlett Packard");
         hpPavilion32.setModel("Pavilion 32");
@@ -67,6 +76,7 @@ public class DataInitializer {
         allInOneService.create(hpPavilion32);
 
         Desktop skyTechChronos = new Desktop();
+        skyTechChronos.setName("Skytech Chronos Mini");
         skyTechChronos.setComputerType(ComputerType.DESKTOP);
         skyTechChronos.setBrandName("Skytech Gaming");
         skyTechChronos.setModel("Chronos Mini");
@@ -83,5 +93,26 @@ public class DataInitializer {
         skyTechChronos.setDescription("Mini Gaming Computer PC Desktop");
         skyTechChronos.setPrice(BigDecimal.valueOf(639.00));
         desktopService.create(skyTechChronos);
+
+        User admin = new User();
+        admin.setEmail("admin@i.ua");
+        admin.setPassword("admin1234");
+        admin.setName("Mary Sue");
+        admin.setRoles(Set.of(ADMIN_ROLE));
+        userService.createUser(admin);
+        User johnDoe = new User();
+        johnDoe.setEmail("userjohn@i.ua");
+        johnDoe.setName("John Doe");
+        johnDoe.setPassword("user1234");
+        johnDoe.setRoles(Set.of(USER_ROLE));
+        shoppingCartService.createShoppingCart(johnDoe);
+        userService.createUser(johnDoe);
+        User janeDoe = new User();
+        janeDoe.setEmail("userjane@i.ua");
+        janeDoe.setName("Jane Doe");
+        janeDoe.setPassword("user1234");
+        janeDoe.setRoles(Set.of(USER_ROLE));
+        shoppingCartService.createShoppingCart(janeDoe);
+        userService.createUser(janeDoe);
     }
 }
