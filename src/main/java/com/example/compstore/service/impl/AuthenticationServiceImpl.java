@@ -36,7 +36,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Transactional
     @Override
-    public User register(String username, String email, String password, boolean isMaster) {
+    public User register(String username, String email, String password) {
         User user = new User();
         user.setName(username);
         user.setEmail(email);

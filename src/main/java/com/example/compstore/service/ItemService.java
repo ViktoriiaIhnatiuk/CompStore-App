@@ -1,9 +1,9 @@
 package com.example.compstore.service;
 
 import com.example.compstore.model.Item;
+import com.example.compstore.model.ShoppingCart;
+import com.example.compstore.model.User;
 
-import java.util.List;
-
-public interface ItemService {
-    List<Item> getAllItems();
+public interface ItemService extends GenericService<Item>{
+    ShoppingCart addItemToShoppingCart(User user, Item item);
 }

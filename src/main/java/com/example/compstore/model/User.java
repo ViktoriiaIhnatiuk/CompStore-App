@@ -1,6 +1,7 @@
 package com.example.compstore.model;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,7 +17,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     @ElementCollection(targetClass = Role.class)
     private Set<Role> roles;
+    @OneToMany
+    private List<Order> orders;
     private String password;
+    private boolean deactivated;
 
     public User() {
     }
@@ -45,6 +49,14 @@ public class User {
         this.email = email;
     }
 
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -61,13 +73,21 @@ public class User {
         this.roles = roles;
     }
 
+    public boolean isDeactivated() {
+        return deactivated;
+    }
+
+    public void setDeactivated(boolean deactivated) {
+        this.deactivated = deactivated;
+    }
+
     @Override
     public String toString() {
-        return "User{"
-                + "id=" + id
-                + ", name='" + name + '\''
-                + ", email='" + email + '\''
-                + ", roles=" + roles
-                + '}';
+        return  "id=" + id
+                + "name='" + name + '\''
+                + "email='" + email + '\''
+                + "roles=" + roles + '\''
+                + "orders=" + orders
+                + "deactivated=" + deactivated;
     }
 }

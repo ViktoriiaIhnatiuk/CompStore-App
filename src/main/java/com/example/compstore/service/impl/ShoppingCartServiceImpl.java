@@ -1,6 +1,5 @@
 package com.example.compstore.service.impl;
 
-import com.example.compstore.model.Item;
 import com.example.compstore.model.ShoppingCart;
 import com.example.compstore.model.User;
 import com.example.compstore.repository.ShoppingCartRepository;
@@ -23,14 +22,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public ShoppingCart addItemToShoppingCart(User user, Item item) {
-        ShoppingCart shoppingCart = getShoppingCartByUser(user);
-        shoppingCart.getItems().add(item);
-        return shoppingCartRepository.save(shoppingCart);
-    }
-
-    @Override
     public String clear(ShoppingCart shoppingCart) {
+        shoppingCart.setItems(null);
         shoppingCartRepository.save(shoppingCart);
         return "Your shopping cart is empty";
     }

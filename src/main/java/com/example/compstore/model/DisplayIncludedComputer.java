@@ -2,8 +2,6 @@ package com.example.compstore.model;
 
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.PositiveOrZero;
 

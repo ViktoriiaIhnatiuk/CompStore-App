@@ -2,12 +2,18 @@ package com.example.compstore.dto.response;
 
 import com.example.compstore.model.ComputerType;
 import com.example.compstore.model.HardDriveType;
+import com.example.compstore.model.ItemType;
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import java.math.BigDecimal;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class LaptopResponseDto {
+    private Long id;
+    private ItemType itemType;
+    private String name;
+    private String description;
+    private BigDecimal price;
+    private boolean deleted;
     private ComputerType computerType;
     private String brandName;
     private String model;
@@ -20,16 +26,61 @@ public class LaptopResponseDto {
     private HardDriveType hardDriveType;
     private int hardDriveSize;
     private String operatingSystem;
-    private String description;
-    private BigDecimal price;
     private int displayDiagonalSize;
     private String displayResolution;
     private int refreshRate;
     private boolean touchScreenSupported;
     private boolean hasWebCam;
     private String webCamResolution;
-    private Long id;
     private int batteryLifeTimeInHours;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public ItemType getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(ItemType itemType) {
+        this.itemType = itemType;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
 
     public ComputerType getComputerType() {
         return computerType;
@@ -127,22 +178,6 @@ public class LaptopResponseDto {
         this.operatingSystem = operatingSystem;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
     public int getDisplayDiagonalSize() {
         return displayDiagonalSize;
     }
@@ -189,14 +224,6 @@ public class LaptopResponseDto {
 
     public void setWebCamResolution(String webCamResolution) {
         this.webCamResolution = webCamResolution;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public int getBatteryLifeTimeInHours() {
