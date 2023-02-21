@@ -53,14 +53,14 @@ public class UserController {
     }
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @PatchMapping("/{id}/deactivate")
+    @PutMapping("/{id}/deactivate")
     @ApiOperation("marks user as deactivated")
     public UserResponseDto deactivateUserById(@PathVariable Long id) {
         return userMapper.mapToDto(userService.deactivateUserById(id));
     }
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @PatchMapping("/{id}/activate")
+    @PutMapping("/{id}/activate")
     @ApiOperation("marks user's deactivated field as false")
     public UserResponseDto activateUserById(@PathVariable Long id) {
         return userMapper.mapToDto(userService.activateUserById(id));

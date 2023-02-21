@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/users/**").hasRole(ROLE_ADMIN)
                 .antMatchers(HttpMethod.POST,
                         "/users/**").hasAnyRole(ROLE_ADMIN)
-                .antMatchers(HttpMethod.PATCH,
+                .antMatchers(HttpMethod.PUT,
                         "/users/**").hasAnyRole(ROLE_ADMIN, ROLE_USER)
                 .antMatchers(HttpMethod.DELETE,
                         "/orders/**", "/laptops/**", "/desktops/**",
@@ -63,16 +63,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/orders/**").hasAnyRole(ROLE_ADMIN, ROLE_USER)
                 .antMatchers(HttpMethod.PATCH,
                         "/orders/**", "/laptops/**", "/desktops/**", "/all-in-one/**",
-                        "/computers/**", "/items/**", "/users/**").hasAnyRole(ROLE_ADMIN)
+                        "/computers/**", "/items/**", "/users/**").hasAnyRole(ROLE_ADMIN, ROLE_USER)
                 .antMatchers(HttpMethod.DELETE,
                         "/orders/**").hasAnyRole(ROLE_ADMIN)
                 .antMatchers(HttpMethod.POST,
                         "/laptops/**", "/desktops/**", "/all-in-one/**",
                         "/computers/**", "/items/**").hasRole(ROLE_ADMIN)
                 .antMatchers(HttpMethod.PUT,
-                        "/laptops/**", "/desktops/**", "/all-in-one/**",
-                        "/computers/**", "/items/**").hasRole(ROLE_ADMIN)
-                .antMatchers(HttpMethod.PATCH,
                         "/laptops/**", "/desktops/**", "/all-in-one/**",
                         "/computers/**", "/items/**").hasRole(ROLE_ADMIN)
                 .anyRequest()
