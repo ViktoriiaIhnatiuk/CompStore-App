@@ -42,28 +42,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/register", "/login", "/swagger-ui/**", "/swagger-resources/**",
                         "/v3/api-docs", "/v2/api-docs").permitAll()
-                .antMatchers(HttpMethod.GET, "/laptops", "/desktops", "/all-in-one",
-                        "/computers", "/items").permitAll()
+                .antMatchers(HttpMethod.GET, "/laptops/**", "/desktops/**", "/all-in-one/**",
+                        "/computers/**", "/items/**").permitAll()
                 .antMatchers(HttpMethod.GET,
                         "/users/**").hasAnyRole(ROLE_ADMIN, ROLE_USER)
                 .antMatchers(HttpMethod.POST,
                         "/users/**").hasAnyRole(ROLE_ADMIN, ROLE_USER)
-                .antMatchers(HttpMethod.PUT,
-                        "/users/**").hasAnyRole(ROLE_ADMIN, ROLE_USER)
-                .antMatchers(HttpMethod.DELETE,
+                .antMatchers(HttpMethod.PATCH,
                         "/users/**").hasRole(ROLE_ADMIN)
                 .antMatchers(HttpMethod.GET,
                         "/shopping-carts/**").hasAnyRole(ROLE_ADMIN, ROLE_USER)
-                .antMatchers(HttpMethod.PUT,
+                .antMatchers(HttpMethod.PATCH,
                         "/shopping-carts/**").hasAnyRole(ROLE_USER)
                 .antMatchers(HttpMethod.GET,
                         "/orders/**").hasAnyRole(ROLE_ADMIN, ROLE_USER)
                 .antMatchers(HttpMethod.POST,
                         "/orders/**").hasAnyRole(ROLE_ADMIN, ROLE_USER)
-                .antMatchers(HttpMethod.PUT,
-                        "/orders/**").hasAnyRole(ROLE_ADMIN, ROLE_USER)
-                .antMatchers(HttpMethod.DELETE,
-                        "/orders/**").hasAnyRole(ROLE_ADMIN, ROLE_USER)
+                .antMatchers(HttpMethod.PATCH,
+                        "/orders/**").hasAnyRole(ROLE_ADMIN)
                 .anyRequest()
                 .authenticated()
                 .and()

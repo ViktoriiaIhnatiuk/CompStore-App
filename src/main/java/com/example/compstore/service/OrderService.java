@@ -1,6 +1,5 @@
 package com.example.compstore.service;
 
-import com.example.compstore.model.Item;
 import com.example.compstore.model.Order;
 import com.example.compstore.model.ShoppingCart;
 
@@ -12,9 +11,8 @@ public interface OrderService {
     Order getOrderById(Long orderId);
     Order updateOrderById(Long orderId);
     String deleteOrderById(Long orderId);
-    Order addItemToOrder(Long orderId, Item item);
-    Order removeItemFromOrder(Long orderId, Item item);
     String completeOrder(ShoppingCart shoppingCart);
     String acceptOrder(Order order);
     Order payForOrder(Order order);
+    Order finishOrder(Order order);
 }

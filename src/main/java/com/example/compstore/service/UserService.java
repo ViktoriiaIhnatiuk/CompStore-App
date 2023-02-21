@@ -13,7 +13,9 @@ public interface UserService {
 
     User updateUserById(Long userId, User user);
 
-    User deleteUserById(Long userId);
+    User deactivateUserById(Long userId);
+
+    User activateUserById(Long userId);
 
     User getUserByEmail(String email);
 
@@ -22,5 +24,4 @@ public interface UserService {
     Boolean hasAdminRole(User user);
 
     User getCurrentAuthenticatedUser();
-
 }

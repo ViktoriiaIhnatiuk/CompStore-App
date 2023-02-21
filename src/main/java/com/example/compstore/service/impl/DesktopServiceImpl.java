@@ -1,8 +1,10 @@
 package com.example.compstore.service.impl;
 
 import com.example.compstore.model.Desktop;
-import com.example.compstore.model.Laptop;
+import com.example.compstore.model.ShoppingCart;
+import com.example.compstore.model.User;
 import com.example.compstore.repository.DesktopRepository;
+import com.example.compstore.repository.ShoppingCartRepository;
 import com.example.compstore.service.DesktopService;
 import com.example.compstore.service.DesktopUpdateService;
 import org.springframework.stereotype.Service;
@@ -13,11 +15,14 @@ import java.util.List;
 public class DesktopServiceImpl implements DesktopService {
     private final DesktopRepository desktopRepository;
     private final DesktopUpdateService desktopUpdateService;
+    private final ShoppingCartRepository shoppingCartRepository;
 
     public DesktopServiceImpl(DesktopRepository desktopRepository,
-                              DesktopUpdateService desktopUpdateService) {
+                              DesktopUpdateService desktopUpdateService,
+                              ShoppingCartRepository shoppingCartRepository) {
         this.desktopRepository = desktopRepository;
         this.desktopUpdateService = desktopUpdateService;
+        this.shoppingCartRepository = shoppingCartRepository;
     }
 
 
@@ -29,7 +34,7 @@ public class DesktopServiceImpl implements DesktopService {
     @Override
     public Desktop get(Long desktopId) {
         return desktopRepository.findById(desktopId).orElseThrow(
-                () -> new RuntimeException("Can't find laptop by id: " + desktopId)
+                () -> new RuntimeException("Can't find desktop by id: " + desktopId)
         );
     }
 
@@ -48,7 +53,14 @@ public class DesktopServiceImpl implements DesktopService {
     @Override
     public Desktop delete(Long desktopId) {
         Desktop desktopToDelete = get(desktopId);
-        desktopRepository.delete(desktopToDelete);
-        return desktopToDelete;
+        desktopToDelete.setDeleted(true);
+        return create(desktopToDelete);
+    }
+
+    @Override
+    public ShoppingCart buy(User user, Desktop desktop) {
+        ShoppingCart shoppingCart = shoppingCartRepository.findByUser(user);
+        shoppingCart.getItems().add(desktop);
+        return shoppingCartRepository.save(shoppingCart);
     }
 }

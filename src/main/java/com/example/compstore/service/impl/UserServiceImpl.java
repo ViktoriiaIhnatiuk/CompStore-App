@@ -11,7 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
-
 @Service
 public class UserServiceImpl implements UserService {
     private final PasswordEncoder encoder;
@@ -56,12 +55,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User deleteUserById(Long userId) {
-        User userToDelete = getUserById(userId);
-        userRepository.delete(userToDelete);
-        return userToDelete;
+    public User deactivateUserById(Long userId) {
+        User userToDeactivate = getUserById(userId);
+        userToDeactivate.setDeactivated(true);
+        return createUser(userToDeactivate);
     }
 
+    @Override
+    public User activateUserById(Long userId) {
+        User userToActivate = getUserById(userId);
+        userToActivate.setDeactivated(false);
+        return createUser(userToActivate);
+    }
     @Override
     public User getUserByEmail(String email) {
         return userRepository.findUserByEmail(email).orElseThrow(

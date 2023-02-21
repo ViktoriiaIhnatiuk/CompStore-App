@@ -1,23 +1,28 @@
 package com.example.compstore.service.impl;
 
+import com.example.compstore.model.Item;
 import com.example.compstore.model.Laptop;
+import com.example.compstore.model.ShoppingCart;
+import com.example.compstore.model.User;
 import com.example.compstore.repository.LaptopRepository;
+import com.example.compstore.repository.ShoppingCartRepository;
 import com.example.compstore.service.LaptopService;
 import com.example.compstore.service.LaptopUpdateService;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-public class LaptopServiceImpl implements LaptopService{
+public class LaptopServiceImpl implements LaptopService {
     private final LaptopRepository laptopRepository;
     private final LaptopUpdateService laptopUpdateService;
-
+    private final ShoppingCartRepository shoppingCartRepository;
 
     public LaptopServiceImpl(LaptopRepository laptopRepository,
-                             LaptopUpdateService laptopUpdateService) {
+                             LaptopUpdateService laptopUpdateService,
+                             ShoppingCartRepository shoppingCartRepository) {
         this.laptopRepository = laptopRepository;
         this.laptopUpdateService = laptopUpdateService;
+        this.shoppingCartRepository = shoppingCartRepository;
     }
 
     @Override
@@ -47,7 +52,16 @@ public class LaptopServiceImpl implements LaptopService{
     @Override
     public Laptop delete(Long laptopId) {
         Laptop laptopToDelete = get(laptopId);
-        laptopRepository.delete(laptopToDelete);
-        return laptopToDelete;
+        laptopToDelete.setDeleted(true);
+        return create(laptopToDelete);
+    }
+
+    @Override
+    public ShoppingCart buy(User user, Laptop laptop) {
+        ShoppingCart shoppingCart = shoppingCartRepository.findByUser(user);
+        List<Item> items = shoppingCart.getItems();
+        items.add(laptop);
+        shoppingCart.setItems(items);
+        return shoppingCartRepository.save(shoppingCart);
     }
 }

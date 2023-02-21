@@ -1,26 +1,20 @@
-package com.example.compstore.model;
+package com.example.compstore.dto.response;
 
-import javax.persistence.*;
+import com.example.compstore.model.Item;
+import com.example.compstore.model.Status;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
-@Table(name = "orders")
-public class Order {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @ManyToOne
-    private User user;
+public class OrderResponseDto {
+    Long id;
+    private UserResponseDto userResponseDto;
     private LocalDateTime orderDate;
-    @ManyToMany
     private List<Item> items;
     private BigDecimal totalPrice = BigDecimal.ZERO;
     private LocalDateTime finishDate;
-    @Enumerated(EnumType.STRING)
     private Status status;
-    private boolean deleted;
+    private boolean isDeleted;
 
     public Long getId() {
         return id;
@@ -30,12 +24,12 @@ public class Order {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public UserResponseDto getUserResponseDto() {
+        return userResponseDto;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserResponseDto(UserResponseDto userResponseDto) {
+        this.userResponseDto = userResponseDto;
     }
 
     public LocalDateTime getOrderDate() {
@@ -79,21 +73,10 @@ public class Order {
     }
 
     public boolean isDeleted() {
-        return deleted;
+        return isDeleted;
     }
 
     public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
-
-    @Override
-    public String toString() {
-        return  "id=" + id + '\n'
-                + "user=" + user.getName() + '\n'
-                + "orderDate=" + orderDate + '\n'
-                + "totalPrice=" + totalPrice + '\n'
-                + "finishDate=" + finishDate + '\n'
-                + "status=" + status + '\n'
-                + "deleted=" + deleted;
+        isDeleted = deleted;
     }
 }

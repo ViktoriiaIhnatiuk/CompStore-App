@@ -6,11 +6,11 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
-
+@Entity
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @DynamicUpdate
-@Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "ITEM_TYPE")
 public abstract class Computer extends Item {
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -30,7 +30,6 @@ public abstract class Computer extends Item {
     @PositiveOrZero
     private int hardDriveSize;
     private String operatingSystem;
-
 
     public ComputerType getComputerType() {
         return computerType;
@@ -145,5 +144,3 @@ public abstract class Computer extends Item {
                 + "operatingSystem='" + operatingSystem + '\'';
     }
 }
-
-

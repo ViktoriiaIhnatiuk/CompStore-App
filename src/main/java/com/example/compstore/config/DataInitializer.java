@@ -32,6 +32,7 @@ public class DataInitializer {
     @PostConstruct
     public void inject() {
         Laptop lenovoThinkPad = new Laptop();
+        lenovoThinkPad.setItemType(ItemType.COMPUTER);
         lenovoThinkPad.setName("Lenovo ThinkPad P15");
         lenovoThinkPad.setComputerType(ComputerType.LAPTOP);
         lenovoThinkPad.setBrandName("Lenovo");
@@ -55,6 +56,7 @@ public class DataInitializer {
         laptopService.create(lenovoThinkPad);
 
         AllInOne hpPavilion32 = new AllInOne();
+        hpPavilion32.setItemType(ItemType.COMPUTER);
         hpPavilion32.setName("HP Pavilion 32");
         hpPavilion32.setComputerType(ComputerType.ALL_IN_ONE);
         hpPavilion32.setBrandName("Hewlett Packard");
@@ -76,6 +78,7 @@ public class DataInitializer {
         allInOneService.create(hpPavilion32);
 
         Desktop skyTechChronos = new Desktop();
+        skyTechChronos.setItemType(ItemType.COMPUTER);
         skyTechChronos.setName("Skytech Chronos Mini");
         skyTechChronos.setComputerType(ComputerType.DESKTOP);
         skyTechChronos.setBrandName("Skytech Gaming");

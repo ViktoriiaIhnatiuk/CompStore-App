@@ -4,6 +4,7 @@ public class UserResponseDto {
     private Long id;
     private String name;
     private String email;
+    private boolean deactivated;
 
     public Long getId() {
         return id;
@@ -27,5 +28,13 @@ public class UserResponseDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean isDeactivated() {
+        return deactivated;
+    }
+
+    public void setDeactivated(boolean deactivated) {
+        this.deactivated = deactivated;
     }
 }

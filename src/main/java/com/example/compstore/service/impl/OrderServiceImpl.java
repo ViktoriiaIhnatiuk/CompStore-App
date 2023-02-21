@@ -2,7 +2,6 @@ package com.example.compstore.service.impl;
 
 import com.example.compstore.model.*;
 import com.example.compstore.repository.OrderRepository;
-import com.example.compstore.service.ItemService;
 import com.example.compstore.service.OrderService;
 import com.example.compstore.service.ShoppingCartService;
 import com.example.compstore.service.UserService;
@@ -21,15 +20,13 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final ShoppingCartService shoppingCartService;
     private final UserService userService;
-    private final ItemService itemService;
 
     public OrderServiceImpl(OrderRepository orderRepository,
                             ShoppingCartService shoppingCartService,
-                            UserService userService, ItemService itemService) {
+                            UserService userService) {
         this.orderRepository = orderRepository;
         this.shoppingCartService = shoppingCartService;
         this.userService = userService;
-        this.itemService = itemService;
     }
     @Transactional
     @Override
@@ -41,13 +38,22 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> getAllOrders() {
-        return orderRepository.findAll();
+        User user = userService.getCurrentAuthenticatedUser();
+        if (userService.hasAdminRole(user)) {
+            return orderRepository.findAll();
+        }
+        return orderRepository.getAllOrdersByUserEmail(user.getEmail());
     }
 
     @Override
     public Order getOrderById(Long orderId) {
-        return orderRepository.findById(orderId).orElseThrow(
+        Order order = orderRepository.findById(orderId).orElseThrow(
                 () -> new RuntimeException("Can't find order with id " + orderId));
+        User user = userService.getCurrentAuthenticatedUser();
+        if (userService.hasAdminRole(user) || order.getUser().equals(user)) {
+        return order;
+        }
+        throw new RuntimeException("please, enter correct order id");
     }
 
     @Override
@@ -63,46 +69,20 @@ public class OrderServiceImpl implements OrderService {
         return "Order with id " + orderId + " has been deleted successfully";
     }
 
-    @Override
-    public Order addItemToOrder(Long orderId, Item item) {
-        Order orderToUpdate = getOrderById(orderId);
-        List<Item> orderItems = orderToUpdate.getItems();
-        orderItems.add(item);
-        orderToUpdate.setItems(orderItems);
-        return orderRepository.save(orderToUpdate);
-    }
-
-    @Transactional
-    @Override
-    public Order removeItemFromOrder(Long orderId, Item item) {
-        Order orderToUpdate = getOrderById(orderId);
-        List<Item> items = orderToUpdate.getItems();
-        if (items.contains(item)) {
-            items.remove(item);
-            orderToUpdate.setItems(items);
-            BigDecimal currentOrderPrice = orderToUpdate.getTotalPrice();
-            BigDecimal orderPrice = currentOrderPrice.subtract(item.getPrice());
-            orderToUpdate.setTotalPrice(orderPrice);
-            return orderRepository.save(orderToUpdate);
-        } else {
-            throw new RuntimeException("there is no such item present");
-        }
-    }
-
     @Transactional
     @Override
     public String completeOrder(ShoppingCart shoppingCart) {
         List<Item> items = shoppingCart.getItems();
         if(items.size() != 0) {
-            User user = userService.getUserById(shoppingCart.getId());
             Order order = new Order();
+            User user = userService.getUserById(shoppingCart.getId());
             BigDecimal orderPrice = items.stream().map(Item::getPrice).reduce(BigDecimal::add).get();
             order.setItems(items);
             order.setTotalPrice(orderPrice);
             order.setUser(user);
             order.setOrderDate(LocalDateTime.now());
             order.setStatus(Status.valueOf(PROJECT_STATUS));
-            Order orderSaved = orderRepository.save(order);
+            createOrder(order);
             shoppingCartService.clear(shoppingCart);
             return "Order has been completed successfully";
         }
@@ -122,6 +102,12 @@ public class OrderServiceImpl implements OrderService {
     public Order payForOrder(Order order) {
         User user = order.getUser();
         order.setStatus(Status.valueOf(PAID_FOR_STATUS));
+        return orderRepository.save(order);
+    }
+
+    @Override
+    public Order finishOrder(Order order) {
+        order.setStatus(Status.valueOf(DONE_STATUS));
         return orderRepository.save(order);
     }
 }
