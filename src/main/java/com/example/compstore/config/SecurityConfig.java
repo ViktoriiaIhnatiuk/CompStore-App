@@ -49,18 +49,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST,
                         "/users/**").hasAnyRole(ROLE_ADMIN)
                 .antMatchers(HttpMethod.PUT,
-                        "/users/**").hasAnyRole(ROLE_ADMIN, ROLE_USER)
+                        "/users/**").hasAnyRole(ROLE_ADMIN)
                 .antMatchers(HttpMethod.DELETE,
                         "/orders/**", "/laptops/**", "/desktops/**",
                         "/items/**", "/all-in-one/**").hasAnyRole(ROLE_ADMIN)
                 .antMatchers(HttpMethod.GET,
                         "/shopping-carts/**").hasAnyRole(ROLE_ADMIN, ROLE_USER)
-                .antMatchers(HttpMethod.PATCH,
-                        "/shopping-carts/**").hasAnyRole(ROLE_USER)
                 .antMatchers(HttpMethod.GET,
                         "/orders/**").hasAnyRole(ROLE_ADMIN, ROLE_USER)
                 .antMatchers(HttpMethod.POST,
-                        "/orders/**").hasAnyRole(ROLE_ADMIN, ROLE_USER)
+                        "/orders/**").hasAnyRole(ROLE_ADMIN)
                 .antMatchers(HttpMethod.PATCH,
                         "/orders/**", "/laptops/**", "/desktops/**", "/all-in-one/**",
                         "/computers/**", "/items/**", "/users/**").hasAnyRole(ROLE_ADMIN, ROLE_USER)
