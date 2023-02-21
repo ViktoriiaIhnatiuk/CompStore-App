@@ -55,7 +55,7 @@ public class LaptopController {
         return laptopMapper.mapToDto(laptopService.get(id));
     }
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     @ApiOperation("updates the laptop with the concrete id. partial updating is available")
     public LaptopResponseDto updateLaptopById(@PathVariable Long id,
                                   @Valid @RequestBody LaptopRequestDto laptopRequestDto) {
@@ -64,14 +64,14 @@ public class LaptopController {
     }
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @PatchMapping("/{id}/delete")
+    @DeleteMapping("/{id}/delete")
     @ApiOperation("soft deletion. marks deleted field of the laptop with the concrete id as true")
     public LaptopResponseDto deleteLaptopById(@PathVariable Long id) throws Throwable {
         return laptopMapper.mapToDto(laptopService.delete(id));
     }
 
     @PreAuthorize("hasAuthority('ROLE_USER')")
-    @PatchMapping("/{id}/buy")
+    @PutMapping("/{id}/buy")
     @ApiOperation("adds the laptop with a concrete id to the current authenticated user's " +
             "shopping cart")
     public ShoppingCartResponseDto buy(@PathVariable Long id)

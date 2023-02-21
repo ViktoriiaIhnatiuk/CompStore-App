@@ -52,7 +52,7 @@ public class AllInOneController {
         return allInOneMapper.mapToDto(allInOneService.get(id));
     }
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     @ApiOperation("updates the all-in-one with the concrete id. Partial updating is available")
     public AllInOneResponseDto updateLaptopById(@PathVariable Long id,
                                    @Valid @RequestBody AllInOneRequestDto allInOneRequestDto) {
@@ -61,14 +61,14 @@ public class AllInOneController {
     }
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @PatchMapping("/{id}/delete")
+    @DeleteMapping("/{id}/delete")
     @ApiOperation("soft deletion. marks deleted field of all-in-one with a concrete id as true")
     public AllInOneResponseDto deleteAllInOneById(@PathVariable Long id) throws Throwable {
         return allInOneMapper.mapToDto(allInOneService.delete(id));
     }
 
     @PreAuthorize("hasAuthority('ROLE_USER')")
-    @PatchMapping("/{id}/buy")
+    @PutMapping("/{id}/buy")
     @ApiOperation("adds all-in-one with a concrete id to the current authenticated user's " +
             "shopping cart")
     public ShoppingCartResponseDto buyAllInOne(@PathVariable Long id) throws Throwable {

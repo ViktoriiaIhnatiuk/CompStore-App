@@ -4,7 +4,6 @@ import com.example.compstore.dto.request.OrderRequestDto;
 import com.example.compstore.dto.response.OrderResponseDto;
 import com.example.compstore.mapper.OrderMapper;
 import com.example.compstore.model.User;
-import com.example.compstore.service.ItemService;
 import com.example.compstore.service.OrderService;
 import com.example.compstore.service.ShoppingCartService;
 import com.example.compstore.service.UserService;
@@ -22,16 +21,13 @@ public class OrderController {
     private final OrderService orderService;
     private final ShoppingCartService shoppingCartService;
     private final UserService userService;
-    private final ItemService itemService;
 
     public OrderController(OrderMapper orderMapper,
                            OrderService orderService,
                            ShoppingCartService shoppingCartService,
-                           UserService userService,
-                           ItemService itemService) {
+                           UserService userService) {
         this.orderMapper = orderMapper;
         this.orderService = orderService;
-        this.itemService = itemService;
         this.shoppingCartService = shoppingCartService;
         this.userService = userService;
     }
@@ -69,7 +65,7 @@ public class OrderController {
     }
 
     @PreAuthorize("hasAuthority('ROLE_USER')")
-    @GetMapping("/complete")
+    @PutMapping("/complete")
     @ApiOperation("creates new order and clears the shopping cart for current authenticated user only")
     public String completeOrder() {
         User user = userService.getCurrentAuthenticatedUser();
@@ -85,9 +81,9 @@ public class OrderController {
 
     @PreAuthorize("hasAuthority('ROLE_USER')")
     @PutMapping("/{id}/pay")
-    @ApiOperation("sets order's status as payed")
+    @ApiOperation("sets order's status as paid")
     public String payForOrder(@PathVariable Long id) {
         orderService.payForOrder(orderService.getOrderById(id));
-        return "Order has been payed";
+        return "Order has been paid";
     }
 }

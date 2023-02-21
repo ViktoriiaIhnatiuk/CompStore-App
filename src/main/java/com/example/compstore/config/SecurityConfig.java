@@ -45,11 +45,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/laptops/**", "/desktops/**", "/all-in-one/**",
                         "/computers/**", "/items/**").permitAll()
                 .antMatchers(HttpMethod.GET,
-                        "/users/**").hasAnyRole(ROLE_ADMIN, ROLE_USER)
-                .antMatchers(HttpMethod.POST,
-                        "/users/**").hasAnyRole(ROLE_ADMIN, ROLE_USER)
-                .antMatchers(HttpMethod.PATCH,
                         "/users/**").hasRole(ROLE_ADMIN)
+                .antMatchers(HttpMethod.POST,
+                        "/users/**").hasAnyRole(ROLE_ADMIN)
+                .antMatchers(HttpMethod.PATCH,
+                        "/users/**").hasAnyRole(ROLE_ADMIN, ROLE_USER)
+                .antMatchers(HttpMethod.DELETE,
+                        "/orders/**").hasAnyRole(ROLE_ADMIN)
                 .antMatchers(HttpMethod.GET,
                         "/shopping-carts/**").hasAnyRole(ROLE_ADMIN, ROLE_USER)
                 .antMatchers(HttpMethod.PATCH,
@@ -60,6 +62,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/orders/**").hasAnyRole(ROLE_ADMIN, ROLE_USER)
                 .antMatchers(HttpMethod.PATCH,
                         "/orders/**").hasAnyRole(ROLE_ADMIN)
+                .antMatchers(HttpMethod.DELETE,
+                        "/orders/**").hasAnyRole(ROLE_ADMIN)
+                .antMatchers(HttpMethod.POST,
+                        "/laptops/**", "/desktops/**", "/all-in-one/**",
+                        "/computers/**", "/items/**").hasRole(ROLE_ADMIN)
+                .antMatchers(HttpMethod.PUT,
+                        "/laptops/**", "/desktops/**", "/all-in-one/**",
+                        "/computers/**", "/items/**").hasRole(ROLE_ADMIN)
+                .antMatchers(HttpMethod.PATCH,
+                        "/laptops/**", "/desktops/**", "/all-in-one/**",
+                        "/computers/**", "/items/**").hasRole(ROLE_ADMIN)
                 .anyRequest()
                 .authenticated()
                 .and()

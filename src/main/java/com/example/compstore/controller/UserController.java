@@ -5,6 +5,7 @@ import com.example.compstore.dto.response.UserResponseDto;
 import com.example.compstore.mapper.UserMapper;
 import com.example.compstore.service.UserService;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,21 +22,20 @@ public class UserController {
         this.userService = userService;
         this.userMapper = userMapper;
     }
-
-
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping
     @ApiOperation("inserts a new user into DB")
     public UserResponseDto createUser(@RequestBody UserRequestDto userRequestDto) {
         return userMapper.mapToDto(userService.createUser(
               userMapper.mapToModel(userRequestDto)));
     }
-
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/{id}")
     @ApiOperation("returns the user with the concrete id")
     public UserResponseDto getUserById(@PathVariable Long id) {
         return userMapper.mapToDto(userService.getUserById(id));
     }
-
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping
     @ApiOperation("returns all users from DB")
     public List<UserResponseDto> getAllUsers() {
@@ -43,7 +43,7 @@ public class UserController {
                 .map(userMapper:: mapToDto)
                 .collect(Collectors.toList());
     }
-
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PutMapping("/{id}")
     @ApiOperation("updates a user with concrete id. partial updating is available")
     public UserResponseDto updateUserById(@PathVariable Long id,
@@ -52,13 +52,15 @@ public class UserController {
                 userMapper.mapToModel(userRequestDto)));
     }
 
-    @GetMapping("/{id}/deactivate")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PatchMapping("/{id}/deactivate")
     @ApiOperation("marks user as deactivated")
     public UserResponseDto deactivateUserById(@PathVariable Long id) {
         return userMapper.mapToDto(userService.deactivateUserById(id));
     }
 
-    @GetMapping("/{id}/activate")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PatchMapping("/{id}/activate")
     @ApiOperation("marks user's deactivated field as false")
     public UserResponseDto activateUserById(@PathVariable Long id) {
         return userMapper.mapToDto(userService.activateUserById(id));
