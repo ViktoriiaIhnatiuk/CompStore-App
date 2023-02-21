@@ -57,7 +57,7 @@ public class DesktopController {
     }
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     @ApiOperation("updates the desktop with the concrete id. partial update is available")
     public DesktopResponseDto updateDesktopById(@PathVariable Long id,
                                    @Valid @RequestBody DesktopRequestDto desktopRequestDto) {
@@ -66,14 +66,14 @@ public class DesktopController {
     }
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @PatchMapping("/{id}/delete")
+    @DeleteMapping("/{id}/delete")
     @ApiOperation("soft deletion. marks deleted field of desktop with a concrete id as true")
     public DesktopResponseDto deleteDesktopById(@PathVariable Long id) throws Throwable {
         return desktopMapper.mapToDto(desktopService.delete(id));
     }
 
     @PreAuthorize("hasAuthority('ROLE_USER')")
-    @PatchMapping("/{id}/buy")
+    @PutMapping("/{id}/buy")
     @ApiOperation("adds the desktop with a concrete id to the current authenticated user's " +
             "shopping cart")
     public ShoppingCartResponseDto Buy(@PathVariable Long id)

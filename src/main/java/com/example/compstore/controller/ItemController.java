@@ -70,7 +70,7 @@ public class ItemController {
         return itemService.get(id);
     }
 
-    @GetMapping("/{id}/delete")
+    @DeleteMapping("/{id}/delete")
     @ApiOperation("provides safe deleting of item with concrete id from DB "
     + " by setting true value into '\"'deleted'\" ' field")
     public Item deleteById(@PathVariable Long id) throws Throwable {
