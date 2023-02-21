@@ -71,7 +71,7 @@ public class LaptopController {
     }
 
     @PreAuthorize("hasAuthority('ROLE_USER')")
-    @PutMapping("/{id}/buy")
+    @PatchMapping("/{id}/buy")
     @ApiOperation("adds the laptop with a concrete id to the current authenticated user's " +
             "shopping cart")
     public ShoppingCartResponseDto buy(@PathVariable Long id)

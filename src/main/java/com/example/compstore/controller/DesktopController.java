@@ -73,7 +73,7 @@ public class DesktopController {
     }
 
     @PreAuthorize("hasAuthority('ROLE_USER')")
-    @PutMapping("/{id}/buy")
+    @PatchMapping("/{id}/buy")
     @ApiOperation("adds the desktop with a concrete id to the current authenticated user's " +
             "shopping cart")
     public ShoppingCartResponseDto Buy(@PathVariable Long id)
